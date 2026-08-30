@@ -120,9 +120,9 @@ best_countries = max(
 print("Highest probabilty", best_countries["country_id"], ["probability"] )
 """
 # --------------------------------
-#   Two Parts Joke :
+#   7 Two Parts Joke :
 # --------------------------------
-
+"""
 url = "https://official-joke-api.appspot.com/random_joke"
 
 response = requests.get(url)
@@ -133,5 +133,48 @@ print(data)
 print(data["setup"])
 
 time.sleep(2)
-
 print(data["punchline"])
+"""
+# --------------------------------
+#   9 Cat Fact API :
+# --------------------------------
+
+url = "https://catfact.ninja/fact"
+
+# print(data)
+
+while True:
+    response = requests.get(url)
+    data = response.json()
+    fact = data["fact"]
+
+    if len(fact) < 150:
+        print(fact)
+        break
+
+# --------------------------------
+#   10 Basic Countries Information :
+# --------------------------------
+# API_KEY=rc_live_c2cf8c5ea4ae4d06a943c635fb3ed13f
+
+
+import requests
+country=input("country:")
+url = f"https://api.restcountries.com/countries/v5/names.common/{country}?pretty=1"
+
+headers = {
+    "Authorization": "Bearer rc_live_c2cf8c5ea4ae4d06a943c635fb3ed13f"
+}
+
+try:
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+
+    data = response.json()
+
+    capital = data["data"]["objects"][0]["capitals"][0]["name"]
+
+    print("Capital:", capital)
+
+except requests.exceptions.HTTPError:
+    print("Not Found!!!")
