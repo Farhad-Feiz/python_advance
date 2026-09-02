@@ -128,3 +128,24 @@ def run_app():
                 "Current Value",
                 f"{value:2f}"
             )
+    # ---------------------------
+    #       Buttons
+    # ---------------------------
+    Button(
+        root,
+        text="Buy",
+        command=buy_click
+    ).pack()
+    
+    Button(
+        root,
+        text="Sell",
+        command=sell_click
+    ).pack()
+    Button(
+        root,
+        text="Current",
+        command=value_click
+    ).pack()
+    root.mainloop()
+

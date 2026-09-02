@@ -16,8 +16,9 @@ class TradeHistory(Base):
     trade_type = CharField()
     amount     = FloatField()
     price      = FloatField()
+def create_tables():
 
-db.connect()
-db.create_tables([Asset,TradeHistory])
+    db.connect(reuse_if_open=True)
+    db.create_tables([Asset,TradeHistory])
 
-db.close()
+    db.close()
