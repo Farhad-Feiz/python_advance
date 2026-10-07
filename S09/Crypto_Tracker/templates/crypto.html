@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Crypto Tracker</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h1>Crypto Tracker</h1>
+
+            <form action="/crypto" method="get" class="search-form">
+
+                <input
+                    type="text"
+                    id="coin"
+                    name="coin"
+                    placeholder="Enter coin name..."
+                    required
+                >
+
+                <button type="submit">
+                    Search
+                </button>
+
+            </form>
+
+        </div>
+
+
+        {% if coin_name %}
+
+        <div class="card">
+
+            <div class="coin-name">
+                {{ coin_name }}
+            </div>
+
+            <div class="price">
+                ${{ price }}
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Last 5 Prices</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Coin</th>
+                        <th>Price (USD)</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for item in prices %}
+
+                    <tr>
+
+                        <td>
+                            {{ item.coin_name }}
+                        </td>
+
+                        <td>
+                            ${{ item.price }}
+                        </td>
+
+                        <td>
+                            {{ item.timestamp.strftime("%d %b %Y - %H:%M:%S") }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
