@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Weather Dashboard</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f5f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .error {
+            background-color: #ffe5e5;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .weather-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .weather-card h2 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-size: 28px;
+        }
+
+        .weather-card > p {
+            margin: 8px 0;
+        }
+
+        .weather-card > p:first-of-type {
+            font-size: 18px;
+        }
+
+        .weather-card > p:nth-of-type(2) {
+            font-size: 55px;
+            margin: 15px 0 5px 0;
+        }
+
+        .weather-card h2 {
+            margin-top: 0;
+        }
+
+        .weather-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-top: 25px;
+        }
+
+        .weather-item {
+        padding: 18px;
+        border: 1px solid #e2e6ea;
+        border-radius: 10px;
+        background-color: #f8f9fa;
+        }
+
+        .weather-item strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .history {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        .history ul {
+            padding-left: 20px;
+        }
+
+        .history li {
+            margin-bottom: 8px;
+        }
+        @media (max-width: 600px) {
+
+        body {
+            padding: 20px;
+        }
+
+        form {
+            flex-direction: column;
+        }
+
+        button {
+            width: 100%;
+        }
+
+        .weather-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .weather-card {
+            padding: 20px;
+        }
+
+        .weather-card h2 {
+            font-size: 24px;
+        }
+
+        .history {
+            padding: 20px;
+        }
+
+    }   
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>Weather Dashboard</h1>
+
+
+    <!-- Search -->
+
+    <div class="search-box">
+
+        <form method="POST">
+
+            <input
+                type="text"
+                name="city"
+                placeholder="Enter city name"
+                required
+            >
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Error -->
+
+    {% if error %}
+
+        <div class="error">
+
+            ⚠ {{ error }}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- Weather -->
+
+    {% if weather %}
+
+        <div class="weather-card">
+
+            <h2>
+                {{ weather.city }}, {{ weather.country }}
+            </h2>
+
+            
+            <p>
+                <span style="font-size: 50px;">
+                    {{ weather.icon }}
+                </span>
+            </p>    
+
+            <p>
+                {{ weather.description }}
+            </p>
+
+
+            <div class="weather-grid">
+
+
+                <div class="weather-item">
+
+                    <strong>
+                        Temperature
+                    </strong>
+
+                    {{ weather.temperature }} °C
+
+                </div>
+
+
+                <div class="weather-item">
+
+                    <strong>
+                        Feels Like
+                    </strong>
+
+                    {{ weather.apparent_temperature }} °C
+
+                </div>
+
+
+                <div class="weather-item">
+
+                    <strong>
+                        Humidity
+                    </strong>
+
+                    {{ weather.humidity }} %
+
+                </div>
+
+
+                <div class="weather-item">
+
+                    <strong>
+                        Wind Speed
+                    </strong>
+
+                    {{ weather.wind_speed }} km/h
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- Search History -->
+
+    <div class="history">
+
+        <h2>
+            Search History
+        </h2>
+
+
+        {% if searches %}
+
+            <ul>
+
+                {% for search in searches %}
+
+                    <li>
+
+                        {{ search.city_name }}
+
+                        -
+
+                        {{ search.search_date.strftime("%d %b %Y - %H:%M") }}
+
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+
+            <p>
+                No searches yet.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>
